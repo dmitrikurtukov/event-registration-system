@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.netgroup.event_registration.event.Event;
+import com.netgroup.event_registration.event.EventNotFoundException;
 import com.netgroup.event_registration.event.EventRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,7 @@ public class RegistrationService {
     @Transactional
     public RegistrationResponse registerForEvent(Long eventId, RegisterForEventRequest request) {
         Event event = eventRepository.findById(eventId)
-                .orElseThrow(() -> new IllegalArgumentException("Event not found"));
+                .orElseThrow(() -> new EventNotFoundException(eventId));
         
         boolean alreadyRegistered = registrationRepository.existsByEventIdAndPersonalCode(
                 eventId, 
@@ -25,12 +26,12 @@ public class RegistrationService {
         );
 
         if (alreadyRegistered) 
-            throw new IllegalArgumentException("Participant is already registered for this event");
+            throw new DuplicateRegistrationException();
 
         long registeredCount = registrationRepository.countByEventId(eventId);
 
         if (registeredCount >= event.getMaxParticipants()) 
-            throw new IllegalArgumentException("Event is fully booked");
+            throw new EventFullyBookedException();
 
         Registration registration = new Registration();
         registration.setEvent(event);
