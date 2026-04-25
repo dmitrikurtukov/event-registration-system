@@ -36,7 +36,7 @@ public class Event {
     private LocalDateTime createdAt;
 
     @PrePersist
-    void onCreate() {
+    void setCreatedAt() {
         createdAt = LocalDateTime.now();
     }
 }
