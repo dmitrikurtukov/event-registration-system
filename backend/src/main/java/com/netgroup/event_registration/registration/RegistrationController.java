@@ -1,9 +1,7 @@
-package com.netgroup.event_registration.event;
-
-import java.util.List;
+package com.netgroup.event_registration.registration;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,20 +11,19 @@ import org.springframework.web.bind.annotation.RestController;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
-@RestController
-@RequestMapping("/api/events")
-@RequiredArgsConstructor
-public class EventController {
-    private final EventService eventService;
 
-    @GetMapping
-    public List<EventResponse> getEvents() {
-        return eventService.getEvents();
-    }
+@RestController
+@RequestMapping("/api/events/{eventId}/registrations")
+@RequiredArgsConstructor
+public class RegistrationController {
+    private final RegistrationService registrationService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public EventResponse createEvent(@Valid @RequestBody CreateEventRequest request) {
-        return eventService.createEvent(request);
+    public RegistrationResponse registerForEvent(
+            @PathVariable Long eventId, 
+            @Valid @RequestBody RegisterForEventRequest request
+    ) {
+        return registrationService.registerForEvent(eventId, request);
     }
 }
