@@ -18,8 +18,10 @@ export interface EventResponse {
 class EventService {
   private readonly endpoint = "/events";
 
-  async getEvents(): Promise<EventResponse[]> {
-    const response = await apiClient.get<EventResponse[]>(this.endpoint);
+  async getEvents(signal?: AbortSignal): Promise<EventResponse[]> {
+    const response = await apiClient.get<EventResponse[]>(this.endpoint, {
+      signal,
+    });
     return response.data;
   }
 
