@@ -1,9 +1,77 @@
-import { Typography } from "@mui/material";
+import { Refresh } from "@mui/icons-material";
+import {
+  Alert,
+  Box,
+  Button,
+  Card,
+  CardContent,
+  CircularProgress,
+  Stack,
+  Typography,
+} from "@mui/material";
+import { useEvents } from "../hooks/useEvents";
+import formatEventTime from "../utils/eventTimeFormatter";
+import getApiErrorMessage from "../utils/getApiErrorMessage";
 
-export function EventsPage() {
+export default function EventsPage() {
+  const { data: events, isLoading, error, refetch } = useEvents();
+
+  if (isLoading) {
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignContent="center"
+        height="100%"
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
+
   return (
-    <Typography variant="h4" component="h1">
-      Events
-    </Typography>
+    <Stack spacing={3}>
+      <Stack direction="row" justifyContent="space-between" alignItems="center">
+        <Typography variant="h4" component="h1">
+          Events
+        </Typography>
+        <Button
+          variant="outlined"
+          startIcon={<Refresh />}
+          onClick={() => refetch()}
+        >
+          Refresh
+        </Button>
+      </Stack>
+
+      {error && <Alert severity="error">{getApiErrorMessage(error)}</Alert>}
+
+      {!error && events.length === 0 && (
+        <Alert severity="info">No events have been created yet.</Alert>
+      )}
+
+      {!error && events.length > 0 && (
+        <Stack spacing={2}>
+          {events.map((event) => (
+            <Card key={event.id} variant="outlined">
+              <CardContent>
+                <Typography variant="h6" component="h2">
+                  {event.title}
+                </Typography>
+
+                <Typography color="text.secondary">
+                  {formatEventTime(event.eventTime)}
+                </Typography>
+
+                <Typography sx={{ mt: 1 }}>
+                  Available spots: {event.availableSpots} /{" "}
+                  {event.maxParticipants}
+                </Typography>
+              </CardContent>
+            </Card>
+          ))}
+        </Stack>
+      )}
+    </Stack>
   );
 }

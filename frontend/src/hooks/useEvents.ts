@@ -5,5 +5,6 @@ export function useEvents() {
   return useQuery({
     queryKey: ["events"],
     queryFn: ({ signal }) => eventService.getEvents(signal),
+    initialData: [],
   });
 }
