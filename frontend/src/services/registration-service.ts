@@ -12,7 +12,7 @@ export interface RegistrationResponse {
   firstName: string;
   lastName: string;
   personalCode: string;
-  createdAd: string;
+  createdAt: string;
 }
 
 class RegistrationService {

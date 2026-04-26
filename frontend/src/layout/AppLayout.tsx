@@ -40,7 +40,7 @@ export function AppLayout() {
         </Toolbar>
       </AppBar>
 
-      <Container component="main" sx={{ py: 4, flexGrow: 1 }}>
+      <Container maxWidth="sm" component="main" sx={{ py: 4, flexGrow: 1 }}>
         <Outlet />
       </Container>
     </Box>
