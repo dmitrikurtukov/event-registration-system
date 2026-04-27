@@ -40,7 +40,11 @@ export default function RegisterEventDialog({
         <DialogContentText>
           Enter your details to register for this event.
         </DialogContentText>
-        <form onSubmit={handleSubmit(onSubmit)} id="event-registration-form">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          id="event-registration-form"
+          noValidate
+        >
           <Stack
             direction={{ xs: "column", sm: "row" }}
             spacing={2}
@@ -97,22 +101,26 @@ export default function RegisterEventDialog({
               errors.personalCode?.message || "Must contain 11 digits."
             }
           />
+          {error && (
+            <Alert
+              severity="error"
+              sx={{ mt: 2 }}
+              className="animate__animated animate__bounceIn"
+            >
+              {getApiErrorMessage(error)}
+            </Alert>
+          )}
         </form>
-        {error && (
-          <Alert
-            severity="error"
-            sx={{ mt: 2 }}
-            className="animate__animated animate__bounceIn"
-          >
-            {getApiErrorMessage(error)}
-          </Alert>
-        )}
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose} disabled={isPending}>
           Cancel
         </Button>
-        <Button type="submit" form="event-registration-form" disabled={isPending}>
+        <Button
+          type="submit"
+          form="event-registration-form"
+          disabled={isPending}
+        >
           Register
         </Button>
       </DialogActions>

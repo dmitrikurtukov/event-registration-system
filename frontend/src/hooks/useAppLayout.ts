@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import { authService } from "../services/auth-service";
+import { useAuth } from "../auth/useAuth";
 
 export function useAppLayout() {
   const navigate = useNavigate();
-  const isLoggedIn = authService.isLoggedIn();
+  const { isLoggedIn, logout } = useAuth();
 
   const goHome = () => {
     navigate("/");
@@ -11,7 +11,7 @@ export function useAppLayout() {
 
   const handleAuthClick = () => {
     if (isLoggedIn) {
-      authService.logout();
+      logout();
       goHome();
       return;
     }

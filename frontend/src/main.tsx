@@ -4,15 +4,18 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { ToastContainer } from "react-toastify";
 import App from "./App.tsx";
+import { AuthProvider } from "./auth/AuthProvider.tsx";
 
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <CssBaseline />
-      <App />
-      <ToastContainer position="top-right" autoClose={3000} theme="colored" />
+      <AuthProvider>
+        <CssBaseline />
+        <App />
+        <ToastContainer position="top-right" autoClose={3000} theme="colored" />
+      </AuthProvider>
     </QueryClientProvider>
   </StrictMode>,
 );
