@@ -13,7 +13,7 @@ public class AuthService {
 
     public LoginResponse login(LoginRequest request) {
         if (!isAdminCredentialsValid(request)) 
-            throw new BadCredentialsException("Invalid email or password");
+            throw new BadCredentialsException("Invalid email or password.");
 
         String token = jwtService.generateToken(request.email());
 
