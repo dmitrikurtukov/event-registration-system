@@ -1,18 +1,8 @@
-import {
-  Alert,
-  Box,
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  CircularProgress,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Alert, Box, CircularProgress, Stack, Typography } from "@mui/material";
 import { useState } from "react";
+import EventCard from "../components/cards/EventCard";
 import RegisterEventDialog from "../components/dialogs/RegisterEventDialog";
 import { useEvents } from "../hooks/useEvents";
-import { formatEventTime } from "../utils/dateTimeFormatters";
 import getApiErrorMessage from "../utils/getApiErrorMessage";
 
 export default function EventsPage() {
@@ -49,29 +39,11 @@ export default function EventsPage() {
         {!error && events.length > 0 && (
           <Stack spacing={2} sx={{ width: "100%" }}>
             {events.map((event) => (
-              <Card key={event.id} variant="outlined">
-                <CardContent>
-                  <Typography variant="h6" component="h2">
-                    {event.title}
-                  </Typography>
-                  <Typography color="text.secondary">
-                    {formatEventTime(event.eventTime)}
-                  </Typography>
-                  <Typography sx={{ mt: 1 }}>
-                    Available spots: {event.availableSpots} /{" "}
-                    {event.maxParticipants}
-                  </Typography>
-                </CardContent>
-                <CardActions>
-                  <Button
-                    onClick={() => setSelectedEventId(event.id)}
-                    size="small"
-                    disabled={event.availableSpots === 0}
-                  >
-                    Register
-                  </Button>
-                </CardActions>
-              </Card>
+              <EventCard
+                key={event.id}
+                event={event}
+                onRegister={setSelectedEventId}
+              />
             ))}
           </Stack>
         )}
