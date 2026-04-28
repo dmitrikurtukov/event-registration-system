@@ -9,7 +9,7 @@ export const createEventSchema = z.object({
     message: "Event time must be in the future.",
   }),
   maxParticipants: z
-    .number("Please enter a number.")
+    .number("Max participants is required.")
     .min(1, "At least 1 participant required."),
 });
 

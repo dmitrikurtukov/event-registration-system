@@ -1,5 +1,8 @@
 export function formatEventTime(eventTime: string): string {
-  return new Date(eventTime).toLocaleString();
+  return new Date(eventTime).toLocaleString(undefined, {
+    dateStyle: "short",
+    timeStyle: "short",
+  });
 }
 
 export function formatDateTimeLocalInputValue(date: Date) {

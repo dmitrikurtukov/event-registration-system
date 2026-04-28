@@ -35,7 +35,7 @@ export default function CreateEventForm() {
           />
 
           <TextField
-            {...register("maxParticipants")}
+            {...register("maxParticipants", { valueAsNumber: true })}
             label="Max participants"
             type="number"
             error={!!errors.maxParticipants}

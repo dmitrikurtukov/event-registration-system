@@ -10,6 +10,9 @@ import {
 import { formatDateTimeLocalInputValue } from "../utils/dateTimeFormatters";
 
 export function useCreateEventForm() {
+  const defaultEventTime = new Date();
+  defaultEventTime.setHours(defaultEventTime.getHours() + 1);
+
   const {
     register,
     handleSubmit,
@@ -18,7 +21,8 @@ export function useCreateEventForm() {
   } = useForm<CreateEventRequest>({
     resolver: zodResolver(createEventSchema),
     defaultValues: {
-      eventTime: formatDateTimeLocalInputValue(new Date()),
+      eventTime: formatDateTimeLocalInputValue(defaultEventTime),
+      maxParticipants: 1,
     },
   });
 
@@ -29,7 +33,7 @@ export function useCreateEventForm() {
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: ["events"] });
       reset();
-      toast.success("Event created successfuly!");
+      toast.success("Event created successfully!");
     },
   });
 
