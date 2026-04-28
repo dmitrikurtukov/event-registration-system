@@ -1,4 +1,3 @@
-import { Refresh } from "@mui/icons-material";
 import {
   Alert,
   Box,
@@ -13,11 +12,11 @@ import {
 import { useState } from "react";
 import RegisterEventDialog from "../components/dialogs/RegisterEventDialog";
 import { useEvents } from "../hooks/useEvents";
-import formatEventTime from "../utils/eventTimeFormatter";
+import { formatEventTime } from "../utils/eventTimeFormatter";
 import getApiErrorMessage from "../utils/getApiErrorMessage";
 
 export default function EventsPage() {
-  const { data: events, isLoading, error, refetch } = useEvents();
+  const { data: events, isLoading, error } = useEvents();
 
   const [selectedEventId, setSelectedEventId] = useState<number | null>(null);
 
@@ -36,23 +35,10 @@ export default function EventsPage() {
 
   return (
     <>
-      <Stack spacing={3}>
-        <Stack
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
-        >
-          <Typography variant="h4" component="h1">
-            Events
-          </Typography>
-          <Button
-            variant="outlined"
-            startIcon={<Refresh />}
-            onClick={() => refetch()}
-          >
-            Refresh
-          </Button>
-        </Stack>
+      <Stack spacing={3} alignItems="center">
+        <Typography variant="h4" component="h1">
+          Events
+        </Typography>
 
         {error && <Alert severity="error">{getApiErrorMessage(error)}</Alert>}
 
@@ -61,7 +47,7 @@ export default function EventsPage() {
         )}
 
         {!error && events.length > 0 && (
-          <Stack spacing={2}>
+          <Stack spacing={2} sx={{ width: "100%" }}>
             {events.map((event) => (
               <Card key={event.id} variant="outlined">
                 <CardContent>

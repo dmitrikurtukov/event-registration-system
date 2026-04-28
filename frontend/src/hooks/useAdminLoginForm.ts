@@ -17,16 +17,15 @@ export function useAdminLoginForm() {
     mutationFn: login,
   });
 
-  const onSubmit = (data: LoginRequest) => {
+  const handleLogin = handleSubmit((data: LoginRequest) => {
     loginMutation.mutate(data);
-  };
+  });
 
   return {
     register,
-    handleSubmit,
-    errors,
-    onSubmit,
-    isPending: loginMutation.isPending,
+    handleLogin,
     error: loginMutation.error,
+    errors,
+    isPending: loginMutation.isPending,
   };
 }

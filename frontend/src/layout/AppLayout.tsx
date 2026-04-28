@@ -1,4 +1,4 @@
-import { Event, Login, Logout } from "@mui/icons-material";
+import { AdminPanelSettings, Event, Logout } from "@mui/icons-material";
 import {
   AppBar,
   Box,
@@ -14,7 +14,7 @@ import { Outlet } from "react-router-dom";
 import { useAppLayout } from "../hooks/useAppLayout";
 
 export function AppLayout() {
-  const { isLoggedIn, goHome, handleAuthClick } = useAppLayout();
+  const { isLoggedIn, goHome, goAdmin, handleLogout } = useAppLayout();
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
@@ -29,13 +29,24 @@ export function AppLayout() {
             </ButtonBase>
           </Box>
           <Box component="nav">
-            <Button
-              onClick={handleAuthClick}
-              startIcon={isLoggedIn ? <Logout /> : <Login />}
-              color="inherit"
-            >
-              {isLoggedIn ? "Logout" : "Admin"}
-            </Button>
+            <Stack direction="row" spacing={1}>
+              <Button
+                onClick={goAdmin}
+                startIcon={<AdminPanelSettings />}
+                color="inherit"
+              >
+                Admin
+              </Button>
+              {isLoggedIn && (
+                <Button
+                  onClick={handleLogout}
+                  startIcon={<Logout />}
+                  color="inherit"
+                >
+                  Logout
+                </Button>
+              )}
+            </Stack>
           </Box>
         </Toolbar>
       </AppBar>

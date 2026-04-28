@@ -1,6 +1,7 @@
 import { Box, Stack, Typography } from "@mui/material";
 import { useAuth } from "../auth/useAuth";
 import AdminLoginForm from "../components/forms/AdminLoginForm";
+import CreateEventForm from "../components/forms/CreateEventForm";
 
 export default function AdminPage() {
   const { isLoggedIn } = useAuth();
@@ -8,16 +9,12 @@ export default function AdminPage() {
   return (
     <Stack spacing={3} alignItems="center">
       <Typography variant="h4" component="h1">
-        Admin
+        {isLoggedIn ? "Create a new event" : "Log in as admin"}
       </Typography>
 
-      {isLoggedIn ? (
-        <Typography>Admin Panel</Typography>
-      ) : (
-        <Box sx={{ width: "100%", maxWidth: 480 }}>
-          <AdminLoginForm />
-        </Box>
-      )}
+      <Box sx={{ width: "100%", maxWidth: 480 }}>
+        {isLoggedIn ? <CreateEventForm /> : <AdminLoginForm />}
+      </Box>
     </Stack>
   );
 }

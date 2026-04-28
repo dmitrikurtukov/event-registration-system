@@ -13,7 +13,7 @@ export function AuthProvider({ children }: Readonly<PropsWithChildren>) {
       login: async (request) => {
         await authService.login(request);
         setIsLoggedIn(true);
-        toast.success("Successfully logged in!");
+        toast.success("Successfully logged in as admin!");
       },
       logout: () => {
         authService.logout();

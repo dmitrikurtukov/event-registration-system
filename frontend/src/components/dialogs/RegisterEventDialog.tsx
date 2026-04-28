@@ -9,7 +9,7 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
-import { useRegisterEventDialog } from "../../hooks/useRegisterEventDialog";
+import { useRegisterEventForm } from "../../hooks/useRegisterEventForm";
 import getApiErrorMessage from "../../utils/getApiErrorMessage";
 
 interface Props {
@@ -23,15 +23,8 @@ export default function RegisterEventDialog({
   open,
   onClose,
 }: Readonly<Props>) {
-  const {
-    register,
-    handleSubmit,
-    errors,
-    onSubmit,
-    handleClose,
-    isPending,
-    error,
-  } = useRegisterEventDialog(eventId, onClose);
+  const { register, handleRegister, handleClose, error, errors, isPending } =
+    useRegisterEventForm(eventId, onClose);
 
   return (
     <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
@@ -40,11 +33,7 @@ export default function RegisterEventDialog({
         <DialogContentText>
           Enter your details to register for this event.
         </DialogContentText>
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          id="event-registration-form"
-          noValidate
-        >
+        <form onSubmit={handleRegister} id="event-registration-form" noValidate>
           <Stack
             direction={{ xs: "column", sm: "row" }}
             spacing={2}

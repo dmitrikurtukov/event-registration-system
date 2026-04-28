@@ -9,19 +9,19 @@ export function useAppLayout() {
     navigate("/");
   };
 
-  const handleAuthClick = () => {
-    if (isLoggedIn) {
-      logout();
-      goHome();
-      return;
-    }
-
+  const goAdmin = () => {
     navigate("/admin");
+  };
+
+  const handleLogout = () => {
+    logout();
+    goHome();
   };
 
   return {
     isLoggedIn,
     goHome,
-    handleAuthClick,
+    goAdmin,
+    handleLogout,
   };
 }

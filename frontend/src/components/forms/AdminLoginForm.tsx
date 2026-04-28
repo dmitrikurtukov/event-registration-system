@@ -4,12 +4,12 @@ import { useAdminLoginForm } from "../../hooks/useAdminLoginForm";
 import getApiErrorMessage from "../../utils/getApiErrorMessage";
 
 export default function AdminLoginForm() {
-  const { register, handleSubmit, errors, onSubmit, isPending, error } =
+  const { register, handleLogin, error, errors, isPending } =
     useAdminLoginForm();
 
   return (
     <Paper variant="outlined" sx={{ p: 3 }}>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleLogin} noValidate>
         <Stack spacing={2}>
           <TextField
             {...register("email", {
