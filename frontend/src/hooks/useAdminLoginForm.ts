@@ -3,7 +3,8 @@ import { useForm } from "react-hook-form";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAuth } from "../auth/useAuth";
-import { loginSchema, type LoginSchema } from "../schemas/loginSchema";
+import { loginSchema } from "../schemas/loginSchema";
+import type { LoginRequest } from "../services/auth-service";
 
 export function useAdminLoginForm() {
   const { login } = useAuth();
@@ -12,7 +13,7 @@ export function useAdminLoginForm() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginSchema>({
+  } = useForm<LoginRequest>({
     resolver: zodResolver(loginSchema),
   });
 

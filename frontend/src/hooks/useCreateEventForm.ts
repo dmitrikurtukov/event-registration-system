@@ -2,31 +2,23 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import {
-  createEventSchema,
-  type CreateEventSchema,
-} from "../schemas/createEventSchema";
+import { createEventSchema } from "../schemas/createEventSchema";
 import {
   eventService,
   type CreateEventRequest,
 } from "../services/event-service";
-import { formatDateForInput } from "../utils/eventTimeFormatter";
+import { formatDateTimeLocalInputValue } from "../utils/dateTimeFormatters";
 
 export function useCreateEventForm() {
-  const now = new Date();
-  const defaultEventTime = formatDateForInput(
-    new Date(now.setHours(now.getHours() + 1)),
-  );
-
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<CreateEventSchema>({
+  } = useForm<CreateEventRequest>({
     resolver: zodResolver(createEventSchema),
     defaultValues: {
-      eventTime: defaultEventTime,
+      eventTime: formatDateTimeLocalInputValue(new Date()),
     },
   });
 

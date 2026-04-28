@@ -12,7 +12,7 @@ import {
 import { useState } from "react";
 import RegisterEventDialog from "../components/dialogs/RegisterEventDialog";
 import { useEvents } from "../hooks/useEvents";
-import { formatEventTime } from "../utils/eventTimeFormatter";
+import { formatEventTime } from "../utils/dateTimeFormatters";
 import getApiErrorMessage from "../utils/getApiErrorMessage";
 
 export default function EventsPage() {

@@ -2,7 +2,7 @@ export function formatEventTime(eventTime: string): string {
   return new Date(eventTime).toLocaleString();
 }
 
-export function formatDateForInput(date: Date) {
+export function formatDateTimeLocalInputValue(date: Date) {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, "0");
   const day = String(date.getDate()).padStart(2, "0");
