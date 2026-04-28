@@ -9,7 +9,39 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql 
+      - postgres_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U event_user -d event_registration"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build:
+      context: ./backend
+    container_name: event-registration-backend
+    environment:
+      DB_URL: jdbc:postgresql://postgres:5432/event_registration
+      DB_USERNAME: event_user
+      DB_PASSWORD: event_password
+      ADMIN_EMAIL: admin@example.com
+      ADMIN_PASSWORD: DevAdmin!2026LocalOnly
+      JWT_SECRET: 9f4b8b6d9d2e4c0f8a6e7b2c5d1a3f0e9c7b4a8d6f2e1c0b5a9d8e7f6c3b2a1
+      JWT_EXPIRATION_MINUTES: 60
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: event-registration-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
 
 volumes:
   postgres_data:

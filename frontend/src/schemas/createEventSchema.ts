@@ -10,7 +10,7 @@ export const createEventSchema = z.object({
   }),
   maxParticipants: z
     .number("Max participants is required.")
-    .min(1, "At least 1 participant required."),
+    .min(1, "At least 1 participan is required."),
 });
 
 export type CreateEventSchema = z.infer<typeof createEventSchema>;
