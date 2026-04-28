@@ -9,15 +9,15 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public record CreateEventRequest(
-        @NotBlank
-        @Size(max = 255)
+        @NotBlank(message = "Title is required.")
+        @Size(max = 255, message = "Title cannot exceed 255 characters.")
         String title,
 
-        @NotNull
-        @Future
+        @NotNull(message = "Event time is required.")
+        @Future(message = "Event time must be in the future.")
         LocalDateTime eventTime,
 
-        @NotNull
-        @Min(1)
+        @NotNull(message = "Maximum participants count is required.")
+        @Min(value = 1, message = "There must be at least 1 participant.")
         Integer maxParticipants
 ) {}
