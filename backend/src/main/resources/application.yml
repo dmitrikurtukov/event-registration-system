@@ -18,5 +18,5 @@ app:
     password: ${ADMIN_PASSWORD:DevAdmin!2026LocalOnly}
 
   jwt:
-    secret: ${JWT_SECRET:change-this-secret-key-to-at-least-32-characters}
+    secret: ${JWT_SECRET:9f4b8b6d9d2e4c0f8a6e7b2c5d1a3f0e9c7b4a8d6f2e1c0b5a9d8e7f6c3b2a1}
     expiration-minutes: ${JWT_EXPIRATION_MINUTES:60}
