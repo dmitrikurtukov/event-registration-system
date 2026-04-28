@@ -1,8 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useAuth } from "../auth/useAuth";
-import type { LoginRequest } from "../services/auth-service";
+import { loginSchema, type LoginSchema } from "../schemas/loginSchema";
 
 export function useAdminLoginForm() {
   const { login } = useAuth();
@@ -11,13 +12,15 @@ export function useAdminLoginForm() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginRequest>();
+  } = useForm<LoginSchema>({
+    resolver: zodResolver(loginSchema),
+  });
 
   const loginMutation = useMutation({
     mutationFn: login,
   });
 
-  const handleLogin = handleSubmit((data: LoginRequest) => {
+  const handleLogin = handleSubmit((data) => {
     loginMutation.mutate(data);
   });
 

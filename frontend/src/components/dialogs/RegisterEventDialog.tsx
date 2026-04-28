@@ -40,13 +40,7 @@ export default function RegisterEventDialog({
             sx={{ mt: 3 }}
           >
             <TextField
-              {...register("firstName", {
-                required: "First name is required.",
-                maxLength: {
-                  value: 100,
-                  message: "First name cannot exceed 100 characters.",
-                },
-              })}
+              {...register("firstName")}
               autoFocus
               margin="normal"
               label="First name"
@@ -57,13 +51,7 @@ export default function RegisterEventDialog({
             />
 
             <TextField
-              {...register("lastName", {
-                required: "Last name is required.",
-                maxLength: {
-                  value: 100,
-                  message: "Last name cannot exceed 100 characters.",
-                },
-              })}
+              {...register("lastName")}
               margin="normal"
               label="Last name"
               fullWidth
@@ -74,13 +62,7 @@ export default function RegisterEventDialog({
           </Stack>
 
           <TextField
-            {...register("personalCode", {
-              required: "Personal code is required.",
-              pattern: {
-                value: /^\d{11}$/,
-                message: "Personal code must be exactly 11 digits.",
-              },
-            })}
+            {...register("personalCode")}
             margin="normal"
             label="Personal code"
             fullWidth

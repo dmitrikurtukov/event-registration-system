@@ -12,9 +12,7 @@ export default function AdminLoginForm() {
       <form onSubmit={handleLogin} noValidate>
         <Stack spacing={2}>
           <TextField
-            {...register("email", {
-              required: "Email is required.",
-            })}
+            {...register("email")}
             label="Email"
             type="email"
             error={!!errors.email}
@@ -23,9 +21,7 @@ export default function AdminLoginForm() {
           />
 
           <TextField
-            {...register("password", {
-              required: "Password is required.",
-            })}
+            {...register("password")}
             label="Password"
             type="password"
             error={!!errors.password}

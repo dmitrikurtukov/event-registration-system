@@ -1,6 +1,11 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import {
+  createEventSchema,
+  type CreateEventSchema,
+} from "../schemas/createEventSchema";
 import {
   eventService,
   type CreateEventRequest,
@@ -18,7 +23,8 @@ export function useCreateEventForm() {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<CreateEventRequest>({
+  } = useForm<CreateEventSchema>({
+    resolver: zodResolver(createEventSchema),
     defaultValues: {
       eventTime: defaultEventTime,
     },
@@ -36,7 +42,6 @@ export function useCreateEventForm() {
   });
 
   const handleCreateEvent = handleSubmit((data) => {
-    console.log(data);
     createEventMutation.mutate(data);
   });
 

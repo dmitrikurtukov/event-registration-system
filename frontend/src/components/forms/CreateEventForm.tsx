@@ -12,13 +12,7 @@ export default function CreateEventForm() {
       <form onSubmit={handleCreateEvent} noValidate>
         <Stack spacing={2}>
           <TextField
-            {...register("title", {
-              required: "Title is required.",
-              maxLength: {
-                value: 255,
-                message: "Title cannot exceed 255 characters.",
-              },
-            })}
+            {...register("title")}
             label="Title"
             type="text"
             error={!!errors.title}
@@ -41,14 +35,7 @@ export default function CreateEventForm() {
           />
 
           <TextField
-            {...register("maxParticipants", {
-              required: "Maximum participants is required.",
-              valueAsNumber: true,
-              min: {
-                value: 1,
-                message: "Maximum participants must be at least 1.",
-              },
-            })}
+            {...register("maxParticipants")}
             label="Max participants"
             type="number"
             error={!!errors.maxParticipants}

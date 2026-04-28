@@ -18,6 +18,6 @@ public record CreateEventRequest(
         LocalDateTime eventTime,
 
         @NotNull(message = "Maximum participants count is required.")
-        @Min(value = 1, message = "There must be at least 1 participant.")
+        @Min(value = 1, message = "At least 1 participant required.")
         Integer maxParticipants
 ) {}
