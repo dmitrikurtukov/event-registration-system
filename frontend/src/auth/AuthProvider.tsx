@@ -1,11 +1,30 @@
-import { type PropsWithChildren, useMemo, useState } from "react";
+import { type PropsWithChildren, useEffect, useMemo, useState } from "react";
 
 import { toast } from "react-toastify";
 import { authService } from "../services/auth-service";
+import { AUTH_TOKEN_REMOVED_EVENT } from "../services/token-storage";
 import { AuthContext, type AuthContextValue } from "./AuthContext";
 
 export function AuthProvider({ children }: Readonly<PropsWithChildren>) {
   const [isLoggedIn, setIsLoggedIn] = useState(authService.isLoggedIn());
+
+  useEffect(() => {
+    const handleTokenRemoved = (event: Event) => {
+      const reason = (event as CustomEvent<{ reason?: string }>).detail?.reason;
+
+      setIsLoggedIn(false);
+
+      if (reason === "expired") {
+        toast.warn("Session expired. Please log in again.");
+      }
+    };
+
+    window.addEventListener(AUTH_TOKEN_REMOVED_EVENT, handleTokenRemoved);
+
+    return () => {
+      window.removeEventListener(AUTH_TOKEN_REMOVED_EVENT, handleTokenRemoved);
+    };
+  }, []);
 
   const value = useMemo<AuthContextValue>(
     () => ({

@@ -12,3 +12,18 @@ apiClient.interceptors.request.use((config) => {
 
   return config;
 });
+
+apiClient.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const status = error.response?.status;
+    const hadAuthorizationHeader = Boolean(
+      error.config?.headers?.Authorization,
+    );
+
+    if ((status === 401 || status === 403) && hadAuthorizationHeader)
+      tokenStorage.removeToken("expired");
+
+    return Promise.reject(error);
+  },
+);

@@ -1,4 +1,7 @@
 const TOKEN_KEY = "event-registration-token";
+export const AUTH_TOKEN_REMOVED_EVENT = "auth-token-removed";
+
+type TokenRemovalReason = "manual" | "expired";
 
 class TokenStorage {
   getToken(): string | null {
@@ -9,8 +12,18 @@ class TokenStorage {
     localStorage.setItem(TOKEN_KEY, token);
   }
 
-  removeToken(): void {
+  removeToken(reason: TokenRemovalReason = "manual"): void {
+    const hadToken = this.hasToken();
+
     localStorage.removeItem(TOKEN_KEY);
+
+    if (hadToken) {
+      globalThis.dispatchEvent(
+        new CustomEvent(AUTH_TOKEN_REMOVED_EVENT, {
+          detail: { reason },
+        }),
+      );
+    }
   }
 
   hasToken(): boolean {

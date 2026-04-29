@@ -6,11 +6,12 @@ import { useEvents } from "../hooks/useEvents";
 import getApiErrorMessage from "../utils/getApiErrorMessage";
 
 export default function EventsPage() {
-  const { data: events, isLoading, error } = useEvents();
+  const { data: events, isPending, error } = useEvents();
+  const eventItems = events ?? [];
 
   const [selectedEventId, setSelectedEventId] = useState<number | null>(null);
 
-  if (isLoading) {
+  if (isPending) {
     return (
       <Box
         display="flex"
@@ -32,13 +33,13 @@ export default function EventsPage() {
 
         {error && <Alert severity="error">{getApiErrorMessage(error)}</Alert>}
 
-        {!error && events.length === 0 && (
+        {!error && eventItems.length === 0 && (
           <Alert severity="info">No events have been created yet.</Alert>
         )}
 
-        {!error && events.length > 0 && (
+        {!error && eventItems.length > 0 && (
           <Stack spacing={2} sx={{ width: "100%" }}>
-            {events.map((event) => (
+            {eventItems.map((event) => (
               <EventCard
                 key={event.id}
                 event={event}
