@@ -14,15 +14,17 @@ export function AuthProvider({ children }: Readonly<PropsWithChildren>) {
 
       setIsLoggedIn(false);
 
-      if (reason === "expired") {
+      if (reason === "expired")
         toast.warn("Session expired. Please log in again.");
-      }
     };
 
-    window.addEventListener(AUTH_TOKEN_REMOVED_EVENT, handleTokenRemoved);
+    globalThis.addEventListener(AUTH_TOKEN_REMOVED_EVENT, handleTokenRemoved);
 
     return () => {
-      window.removeEventListener(AUTH_TOKEN_REMOVED_EVENT, handleTokenRemoved);
+      globalThis.removeEventListener(
+        AUTH_TOKEN_REMOVED_EVENT,
+        handleTokenRemoved,
+      );
     };
   }, []);
 
