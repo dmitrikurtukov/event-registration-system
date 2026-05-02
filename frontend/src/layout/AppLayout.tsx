@@ -15,7 +15,11 @@ export function AppLayout() {
     >
       <AppHeader />
 
-      <Container maxWidth="sm" component="main" sx={{ py: 4, flexGrow: 1 }}>
+      <Container
+        maxWidth="sm"
+        component="main"
+        sx={{ py: 4, flexGrow: 1, display: "flex", flexDirection: "column" }}
+      >
         <Outlet />
       </Container>
     </Box>

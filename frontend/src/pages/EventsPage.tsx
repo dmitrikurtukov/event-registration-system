@@ -16,8 +16,8 @@ export default function EventsPage() {
       <Box
         display="flex"
         justifyContent="center"
-        alignContent="center"
-        height="100%"
+        alignItems="center"
+        flexGrow={1}
       >
         <CircularProgress />
       </Box>
